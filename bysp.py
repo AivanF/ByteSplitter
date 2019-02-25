@@ -14,9 +14,8 @@ __license__ = """License:
  appropriate credit, provide a link to the original file, and indicate if changes were made.
  This notice may not be removed or altered from any source distribution."""
 
-import sys
-
 from io import BytesIO
+import sys
 
 if sys.version_info[0] == 3:
 	basestring = str

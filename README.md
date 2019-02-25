@@ -15,17 +15,17 @@ and each byte of the group will be written into corresponding part.
 
 Let's consider an example, a small file with 12 bytes which we want to devide into 3 parts:
 
-> 12 88 64 97 70 52 76 63 57 02 91 24
+`12 88 64 97 70 52 76 63 57 02 91 24`
 
 It is divided into 4 groups of 3 bytes each:
 
-> (12 88 64) (97 70 52) (76 63 57) (02 91 24)
+`(12 88 64) (97 70 52) (76 63 57) (02 91 24)`
 
 Which are written as 3 parts:
 
-> 12 97 76 02  
-> 88 70 63 91  
-> 64 52 57 24  
+1. `12 97 76 02`  
+2. `88 70 63 91`  
+3. `64 52 57 24`
 
 If a file size is not divisible by parts count, then the last group just won't be full,
 and the parts will have a bit (a byte, to be precise) different size.
@@ -36,45 +36,45 @@ Moreover, many popular formats of pictures, music and video have compression by 
 
 # Command line usage patterns
 
-1. Splitting of a file with default names of parts:
+1) Splitting of a file with default names of parts:
 
->split <file_name> <split_count>  
+- `split <file_name> <split_count>`
 
-2. Splitting of a file with specified names of parts:
+2) Splitting of a file with specified names of parts:
 
->split <file_name> <part_name> <part_name> ...  
+- `split <file_name> <part_name> <part_name>` 
 
-3. Combining of a file with default names of parts:
+3) Combining of a file with default names of parts:
 
->combine <file_name>  
+- `combine <file_name>`
 
-4. Combining of a file with specified names of parts:
+4) Combining of a file with specified names of parts:
 
->combine <file_name> <part_name> <part_name> ...  
+`combine <file_name> <part_name> <part_name> ...`
 
 # Command line usage examples
 
-1. Combine user-named part files into whole `result.png`:
+1) Combine user-named part files into whole `result.png`:
 
->python bysp.py combine result.png p3 p14 p15  
+- `python bysp.py combine result.png p3 p14 p15`
 
-2. Split the file into 2 parts with custom names:
+2) Split the file into 2 parts with custom names:
 
->python bysp.py split result.png abc def  
+- `python bysp.py split result.png abc def`
 
-3. Split the file into 10 parts with automatically given names `result.png.0.part`, ..., `result.png.9.part`:
+3) Split the file into 10 parts with automatically given names `result.png.0.part`, ..., `result.png.9.part`:
 
->python bysp.py s result.png 10  
+- `python bysp.py s result.png 10`
 
-4. Combine automatically named parts into whole file (Count of parts mustn't be specified if the files have default names):
+4) Combine automatically named parts into whole file (Count of parts mustn't be specified if the files have default names):
 
->python bysp.py c new-result.png  
+- `python bysp.py c new-result.png`
 
 Note that you will maybe need to specify some relative path to the files.
 
 # Python usage
 
-ByteSplitter can be easily used as a regular Python library. The code consists of single file and several simple functions with docstrings, so you can easily understand it.
+ByteSplitter can be easily used as a regular Python library. The code consists of single file and several simple functions with docstrings, so you can easily understand it. The code works well on both Python 2 & 3.
 
 ## License
 

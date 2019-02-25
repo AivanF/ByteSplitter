@@ -1,4 +1,7 @@
 
+README-PYPI.md
 *.DS_Store
 *.pyc
 .ipynb_checkpoints
+/ByteSplitter.egg-info/
+/dist/
