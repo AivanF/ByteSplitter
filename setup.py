@@ -5,14 +5,14 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='ByteSplitter',
-    version='1.0.0',
+    version='1.0.4',
     author='AivanF.',
     author_email='projects@aivanf.com',
     description='A tiny Python utility for splitting any binary files into parts and combining them back',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/AivanF/ByteSplitter',
-    packages=setuptools.find_packages(),
+    packages=['bysp'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
@@ -27,4 +27,7 @@ setuptools.setup(
         'Topic :: System :: Filesystems',
         'License :: Freely Distributable',
     ],
+    entry_points={
+        'console_scripts': ['bysp=bysp:main'],
+    },
 )

@@ -46,19 +46,19 @@ def split_iob(whole, split_count):
 	return parts, bytes_count
 
 
-def split_io(whole, split_count):
+def split_io(*args, **kwargs):
 	"""Return a list with parts of given file-like object.
 
 	This function works the same as split_iob, but returns only list, without bytes sum.
 	"""
-	return split_iob(whole, split_count)[0]
+	return split_iob(*args, **kwargs)[0]
 
 
-def split_file(filename, split_count=None, parts=None, save=True):
+def split_file(whole, split_count=None, parts=None, save=True):
 	"""Split a file into parts, then save them to the disk or return a list with parts.
 
 	Keyword arguments:
-	filename -- the file to split
+	whole -- filename or file-like object to split
 	split_count -- count of parts to create
 	parts -- parts filenames 
 	save -- if should save on the save, or just return a list of parts
@@ -72,19 +72,28 @@ def split_file(filename, split_count=None, parts=None, save=True):
 	else:
 		if split_count is None:
 			split_count = len(parts)
-	with open(filename, 'rb') as whole:
-		results = split_iob(whole, split_count)
-		parts_io = results[0]
+	if isinstance(whole, basestring):
+		filename_given = True
+		whole_io = open(whole, 'rb')
+	else:
+		filename_given = False
+		whole_io = whole
+	results = split_iob(whole_io, split_count)
+	parts_io = results[0]
+	if filename_given:
+		whole_io.close()
 	if save:
-		print('Bytes sum: {}'.format(results[1]))
 		for i, part_io in enumerate(parts_io):
 			if parts is None:
-				name = filename + '.{}.part'.format(i)
+				if filename_given:
+					name = whole + '.{}.part'.format(i)
+				else:
+					raise ValueError('If save=True, then parts must be given or whole must be a filename!')
 			else:
 				name = parts[i]
 			with open(name, 'wb') as fl:
 				fl.write(part_io.read())
-		print('Split done!')
+		print('Split done! Bytes sum: {}'.format(results[1]))
 	else:
 		return parts_io
 
@@ -160,10 +169,9 @@ def combine_file(filename=None, parts=None, save=True):
 	if save:
 		if filename is None:
 			raise ValueError('If save=True, the filename must be given!')
-		print('Bytes sum: {}'.format(results[1]))
 		with open(filename, 'wb') as whole:
 			whole.write(whole_io.read())
-		print('Combine done!')
+		print('Combine done! Bytes sum: {}'.format(results[1]))
 	else:
 		return whole_io
 

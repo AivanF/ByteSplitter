@@ -5,3 +5,4 @@ README-PYPI.md
 .ipynb_checkpoints
 /ByteSplitter.egg-info/
 /dist/
+/build/
